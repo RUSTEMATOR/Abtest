@@ -25,4 +25,4 @@ function vpnDisconnect(){
   runVPN('ExpressVPN.CLI disconnect');
   }   
 
-vpnConnnect("Canada");
+vpnConnnect(`"Canada - Montreal"`);

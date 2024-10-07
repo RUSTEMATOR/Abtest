@@ -22,11 +22,11 @@ export class Methods{
         }
 
     vpnConnnect(location: string){
-        this.runVPN(`expressvpn connect ${location}`);
+        this.runVPN(`ExpressVPN.CLI connect "${location}"`);
         }
     
     vpnDisconnect(){
-        this.runVPN('expressvpn disconnect');
+        this.runVPN('ExpressVPN.CLI disconnect');
         }   
 
 }
