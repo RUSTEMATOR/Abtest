@@ -1,32 +1,46 @@
-import { exec } from 'child_process';
+import {expect, type Page } from '@playwright/test';
 
-export class Methods{
 
-    constructor(){}
+export class Methods {
+    readonly page: Page;
+
+    constructor(page: Page){
+        this.page = page;
+    }
  
-    runVPN(command: string) {
-        exec(command, { cwd: 'C:/Program Files (x86)/ExpressVPN/services/' }, (error: any, stdout: string, stderr: string) => {
-            if (error) {
-            console.error(`Error executing command: ${error.message}`);
-            return;
-            }
-        
-            if (stderr) {
-            console.error(`Error: ${stderr}`);
-            return;
-            }
-        
-            
-            console.log(`Output: ${stdout}`);
-        });
-        }
+    async formBaseLink(){
+        const fullUrl = await this.page.url()
 
-    vpnConnnect(location: string){
-        this.runVPN(`ExpressVPN.CLI connect "${location}"`);
-        }
-    
-    vpnDisconnect(){
-        this.runVPN('ExpressVPN.CLI disconnect');
-        }   
+        const url = new URL(fullUrl)
 
+        const baseCurrentUrl = `${url.origin}${url.pathname}`
+
+        console.log(baseCurrentUrl)
+
+        return baseCurrentUrl
+    }
+        
+    async visitPage(link: string){
+        await this.page.waitForTimeout(2000)
+
+        await this.page.goto(link)
+
+        await this.page.waitForTimeout(7000)
+    }
+
+    async checkUrl(baseCurrentUrl: string, expectedUrlOne: string, expectedUrlTwo: string){
+        if (baseCurrentUrl == expectedUrlOne) {
+
+            console.log(`${expectedUrlOne}\n`)
+
+          } else if (baseCurrentUrl == expectedUrlTwo) {
+
+            console.log(`${expectedUrlTwo}\n`)
+
+          } else {
+            // Explicitly fail the test if the URL doesn't match any expected value
+            console.log(`${expectedUrlOne}\n${expectedUrlTwo}`)
+            throw new Error();
+          }
+        }
 }
