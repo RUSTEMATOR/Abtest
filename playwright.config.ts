@@ -24,7 +24,25 @@ export default defineConfig({
   workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [['html'],
-              ['list']],
+              ['list'],
+              ['playwright-qase-reporter', {
+                debug: false,
+                mode: 'testops',
+                logging: true,
+                testops: {
+                  api: {
+                    token: '2b3e65ab1ee17f1440a13c94b9d1da5429f590fdbcc8d080ddc41268ae50305b',
+                  },
+                  project: 'CUR',
+                  uploadAttachments: true,
+                  run: {
+                    complete: true,
+                  }
+
+                }
+              }
+            ]
+         ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     headless: false,
@@ -34,6 +52,8 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
+    video: 'on',
+    screenshot: 'on',
   },
 
   /* Configure projects for major browsers */
