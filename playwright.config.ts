@@ -16,17 +16,20 @@ export default defineConfig({
   testMatch: '**/*.spec.ts',
   /* Run tests in files in parallel */
   fullyParallel: true,
+
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: 3,
+  timeout: 120000,
   /* Opt out of parallel tests on CI. */
   workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['html'],
+  reporter: [
+    // ['html'],
               ['list'],
               ['playwright-qase-reporter', {
-                debug: false,
+                debug: true,
                 mode: 'testops',
                 logging: true,
                 testops: {
@@ -54,6 +57,8 @@ export default defineConfig({
     trace: 'on',
     video: 'on',
     screenshot: 'on',
+    
+    
   },
 
   /* Configure projects for major browsers */

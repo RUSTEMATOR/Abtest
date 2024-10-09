@@ -1,10 +1,11 @@
-import {expect, type Page } from '@playwright/test';
+import {expect, type Page, type Browser } from '@playwright/test';
 import { qase } from 'playwright-qase-reporter';
 
 
 
 export class Methods {
     readonly page: Page;
+    
 
     constructor(page: Page){
         this.page = page;
@@ -58,7 +59,7 @@ export class Methods {
     }
         
     async visitPage(link: string){
-        await this.page.waitForTimeout(2000)
+        
 
         await this.page.goto(link)
 
@@ -91,8 +92,11 @@ export class Methods {
         // Explicitly fail the test if the query parameters don't match
       
         console.log(`Received query parameters: ${extractedQuery}\n Expected query parameters: ${expectedQuery}`)
-        throw new Error();
+        throw new Error(`Wrong query parameters: received: ${extractedQuery}  and expected query parameters: ${expectedQuery}`);
       }
-  
-    }
+}
+  async sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 }

@@ -1,8 +1,9 @@
-import { test } from '@playwright/test';
-import { Methods } from '../src/methods/methods';
-import { LOCATIONS, CANADA_LINKS, EXPECTED_CANADA_LINKS, GERMANY_LINKS, EXPECTED_GERMANY_LINKS, EXPECTED_QUERY } from '../src/Data/constants';
+import {test} from 'playwright/test';
+
+import { LOCATIONS } from '../src/Data/constants';
+import Recursions from '../src/methods/recursions'
 import VpnController from '../src/methods/vpnController';
-import { qase } from 'playwright-qase-reporter';
+
 
 
 
@@ -10,79 +11,124 @@ import { qase } from 'playwright-qase-reporter';
 
 test.describe('A/B test Canada', () => {
     const vpnController = new VpnController()
-    let counter = 0;
+    const recursions = new Recursions()
+    
 
-test.beforeAll(() => {
-    vpnController.vpnConnnect(LOCATIONS.Canada)
-})
-
-    for(let link of CANADA_LINKS){
-
-        for (let i: number = 0; i < 5; i++){
-            counter+=1
-
-            
-            test(`CA open page and check if the correct page has been opened ${counter}`, async ({page}) => {
-                const methods = new Methods(page)  
-
-                
-                await methods.visitPage(link)
-                
-                const baseCurrentUrl = await methods.formBaseLink()
-                const receivedParameters = await methods.formQueryParameters()
-
-                await methods.checkUrl(baseCurrentUrl, EXPECTED_CANADA_LINKS.expectedUrlOne, EXPECTED_CANADA_LINKS.expectedUrlTwo)
-                await methods.checkQueryParameters(receivedParameters, EXPECTED_QUERY.expectedQueryCA)
-
-                await page.waitForTimeout(5000)
-                qase.comment(`Current URL: ${baseCurrentUrl}\n Expected links: \n${EXPECTED_CANADA_LINKS.expectedUrlOne}\n${EXPECTED_CANADA_LINKS.expectedUrlTwo}
-                    \n\n Expected parameters: ${EXPECTED_QUERY.expectedQueryCA}\n Received parameters: ${receivedParameters}`)
+    test.beforeAll(async () => {
+        vpnController.vpnConnnect(LOCATIONS.Canada)
+    })
+        
+        test(`Landing WP Stag check page and params`, async () => {
+            await recursions.recursiveTestWelcomeStag()
             })
-        }
-    }
-test.afterAll(() => {
-    vpnController.vpnDisconnect()
-})
-})
+        
+        test(`Landing Land Stag check page and params`, async () => {
+            await recursions.recursiveTestLandStag()
+            })
+
+        test(`Landing WP Btag check page and params`, async () => {
+            await recursions.recursiveTestWelcomeBtag()
+            })
+        
+        test(`Landing Land Btag check page and params`, async () => {
+            await recursions.recursiveTestLandBtag()
+            })
 
 
-
-test.describe('A/B test Germany', () => {
-    const vpnController = new VpnController()
-    let counter = 0;
-
-    test.beforeAll(() => {
-        vpnController.vpnConnnect(LOCATIONS.Germany)
-    })
-
-        for(let link of GERMANY_LINKS){
-
-            for (let i: number = 0; i < 5; i++){
-                counter+=1
-                
-                test(`DE open page and check if the correct page has been opened, ${counter}`, async ({page}) => {
-                    const methods = new Methods(page)  
-
-                    await methods.visitPage(link)
-                    
-                    const baseCurrentUrl = await methods.formBaseLink()
-                    const receivedParameters = await methods.formQueryParameters()
-
-                    await methods.checkUrl(baseCurrentUrl, EXPECTED_GERMANY_LINKS.expectedUrlOne, EXPECTED_GERMANY_LINKS.expectedUrlTwo)
-                    await methods.checkQueryParameters(receivedParameters, EXPECTED_QUERY.expectedQueryDE)
-
-                    await page.waitForTimeout(5000)
-                    
-                    
-
-                    qase.comment(`Current URL: ${baseCurrentUrl}\n Expected links: \n${EXPECTED_GERMANY_LINKS.expectedUrlOne}\n${EXPECTED_GERMANY_LINKS.expectedUrlTwo}
-                        \n\n Expected parameters: ${EXPECTED_QUERY.expectedQueryDE}\n Received parameters: ${receivedParameters}`)
-                })
-            }
-        }
-
-    test.afterAll(() => {
+    test.afterAll(async () => {
         vpnController.vpnDisconnect()
+       
+        })
     })
 
+
+
+test.describe('A/B test GermanyWP', () => {
+    const vpnController = new VpnController()
+    const recursions = new Recursions()
+
+
+    test.beforeAll(async () => {
+
+        await vpnController.vpnConnnect(LOCATIONS.Germany)
+    
+        
+    })
+
+        test(`Landing WP DE Stag check page and params`, async () => {
+            await recursions.recursiveTestWelcomeDEStag()
+        })
+
+        test(`Landing WP DE Btag check page and params`, async () => {
+            await recursions.recursiveTestWelcomeDEBtag()
+        })
+
+        test(`Landing Land DE Stag check page and params`, async () => {
+            await recursions.recursiveTestLandDEStag()
+        })
+
+        test(`Landing Land DE Btag check page and params`, async () => {
+            await recursions.recursiveTestLandDEBtag()
+        })
+
+
+
+    test.afterAll(async () => {
+        await vpnController.vpnDisconnect()
+      
+    })
+
+})
+
+
+test.describe('A/B NDB Australia', () => {
+    const vpnController = new VpnController()
+    const recursions = new Recursions()
+
+
+    test.beforeAll(async () => {
+        vpnController.vpnConnnect(LOCATIONS.Australia)
+        
+
+    })
+
+    test('Landing No Dep Australia', async () => {
+        await recursions.recursiveTestAUNoDep()
+    })
+
+    test('Landing NDB', async () => {
+        await recursions.recursiveTestAUNDB()
+    })
+
+
+    test.afterAll(async () => {
+        vpnController.vpnDisconnect()
+        
+    })
+})
+
+
+test.describe('A/B NDB Germany', () => {
+    const vpnController = new VpnController()
+    const recursions = new Recursions()
+
+
+    test.beforeAll(async () => {
+        vpnController.vpnConnnect(LOCATIONS.Germany)
+        
+
+    })
+
+    test('Landing No Dep Germany', async () => {
+        await recursions.recursiveTestDENoDep()
+    })
+
+    test('Landing NDB', async () => {
+        await recursions.recursiveTestDENDB()
+    })
+
+    test.afterAll(async () => {
+        vpnController.vpnDisconnect()
+        
+    })
 })

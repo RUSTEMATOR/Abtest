@@ -33,6 +33,10 @@ export class VpnController {
         const status = this.runVPN('ExpressVPN.CLI status')
         return status
     }
+
+    async sleepVPN(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
     
     }
 
