@@ -16,23 +16,49 @@ export default defineConfig({
   testMatch: '**/*.spec.ts',
   /* Run tests in files in parallel */
   fullyParallel: true,
+
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: 0,
+  retries: 3,
+  timeout: 120000,
   /* Opt out of parallel tests on CI. */
   workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['html'],
-              ['list']],
+  reporter: [
+    // ['html'],
+              ['list'],
+              ['playwright-qase-reporter', {
+                debug: true,
+                mode: 'testops',
+                logging: true,
+                testops: {
+                  api: {
+                    token: '2b3e65ab1ee17f1440a13c94b9d1da5429f590fdbcc8d080ddc41268ae50305b',
+                  },
+                  project: 'CUR',
+                  uploadAttachments: true,
+                  run: {
+                    complete: true,
+                  }
+
+                }
+              }
+            ]
+         ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     headless: false,
+    
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
+    video: 'on',
+    screenshot: 'on',
+    
+    
   },
 
   /* Configure projects for major browsers */
