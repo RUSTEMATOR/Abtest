@@ -67,7 +67,7 @@ export const EXPECTED_AUSTRALIA_NDB_LINKS: IExpectedLinksNDB = {
 
 }
 
-export const GERMANY_LINK_NDB: string = 'https://refer.kingtraf.com/a816dca4e'
+export const GERMANY_LINK_NDB: string = 'https://refer.kingtraf.com/a1668db2e'
 
 export const EXPECTED_GERMANY_NDB_LINKS: IExpectedLinksNDB = {
     expectedUrlNDB: 'https://www.kingbillycasino11.com/land/de/ndb_1',
@@ -77,7 +77,7 @@ export const EXPECTED_GERMANY_NDB_LINKS: IExpectedLinksNDB = {
 
 export const EXPECTED_QUERY: IExpectedQuery = {
     expectedQueryDE: "utm_source=Welcome&utm_medium=DE&utm_campaign=w1&utm_content=02_10_24&utm_term=Original",
-    expectedQuerryDENDB: "utm_source=NDB&utm_medium=DE&utm_campaign=n1&utm_content=08_10_24&utm_term=Original",
+    expectedQuerryDENDB: "utm_source=NDB&utm_medium=DE&utm_campaign=n1&utm_content=10_10_24&utm_term=Original",
     expectedQueryCA: "utm_source=Welcome&utm_medium=CA&utm_campaign=w1&utm_content=02_10_24&utm_term=Original",
-    expectedQueryAU: "utm_source=NDB&utm_medium=AU&utm_campaign=n1&utm_content=08_10_24&utm_term=Original"
+    expectedQueryAU: "utm_source=NDB&utm_medium=AU&utm_campaign=n1&utm_content=10_10_24&utm_term=Original"
 }

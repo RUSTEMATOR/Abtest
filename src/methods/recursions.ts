@@ -417,9 +417,13 @@ export default class Recursions {
         await methods.visitPage(GERMANY_LINK_NDB)
 
         const baseCurrentUrl = await methods.formBaseLink()
-
+        
+        console.log(`Expecting ${EXPECTED_GERMANY_NDB_LINKS.expectedUrlNDB} or ${EXPECTED_GERMANY_NDB_LINKS.expectedUrlNoDep}`)
+        qase.comment(`Expecting ${EXPECTED_GERMANY_NDB_LINKS.expectedUrlNDB} or ${EXPECTED_GERMANY_NDB_LINKS.expectedUrlNoDep}`)
 
         if (baseCurrentUrl === EXPECTED_GERMANY_NDB_LINKS.expectedUrlNDB){
+
+
             
             const baseCurrentUrl = await methods.formBaseLink()
             const receivedParameters = await methods.formQueryParameters()
@@ -460,8 +464,12 @@ export default class Recursions {
 
         const baseCurrentUrl = await methods.formBaseLink()
 
+        console.log(`Expecting ${EXPECTED_GERMANY_NDB_LINKS.expectedUrlNDB} or ${EXPECTED_GERMANY_NDB_LINKS.expectedUrlNoDep}`)
+        qase.comment(`Expecting ${EXPECTED_GERMANY_NDB_LINKS.expectedUrlNDB} or ${EXPECTED_GERMANY_NDB_LINKS.expectedUrlNoDep}`)
 
         if (baseCurrentUrl === EXPECTED_GERMANY_NDB_LINKS.expectedUrlNoDep){
+
+ 
             
             const baseCurrentUrl = await methods.formBaseLink()
             const receivedParameters = await methods.formQueryParameters()
