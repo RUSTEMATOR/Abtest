@@ -1,8 +1,9 @@
 import {test} from 'playwright/test';
 
-import { LOCATIONS } from '../src/Data/constants';
+import { GERMANY_LINK_NDB, GERMANY_LINKS, LOCATIONS } from '../src/Data/constants';
 import Recursions from '../src/methods/recursions'
 import VpnController from '../src/methods/vpnController';
+import { Methods } from '../src/methods/methods';
 
 
 
@@ -84,12 +85,17 @@ test.describe('A/B test GermanyWP', () => {
 test.describe('A/B NDB Australia', () => {
     const vpnController = new VpnController()
     const recursions = new Recursions()
-
+    
 
     test.beforeAll(async () => {
+       
         vpnController.vpnConnnect(LOCATIONS.Australia)
-        
+       
+    })
 
+    test.beforeEach(async ({page}) => {
+       const methods = new Methods(page)
+        methods.sleep(4000)
     })
 
     test('Landing No Dep Australia', async () => {
